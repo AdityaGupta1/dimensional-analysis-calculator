@@ -27,4 +27,9 @@ public class Unit {
 
         return otherUnit.getUnitString().equals(unitString) && otherUnit.getUnitType().equals(type);
     }
+
+    @Override
+    public String toString() {
+        return unitString;
+    }
 }

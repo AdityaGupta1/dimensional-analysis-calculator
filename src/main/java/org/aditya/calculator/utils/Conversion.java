@@ -35,6 +35,7 @@ public class Conversion {
         return units;
     }
 
+    /*
     @Override
     public boolean equals(Object otherObject) {
         if (!(otherObject instanceof Conversion)) {
@@ -45,4 +46,5 @@ public class Conversion {
 
         return otherConversion.getUnitValues().contains(unit1) && otherConversion.getUnitValues().contains(unit2);
     }
+    */
 }

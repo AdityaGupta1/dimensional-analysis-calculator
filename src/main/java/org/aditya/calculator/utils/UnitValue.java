@@ -27,4 +27,9 @@ public class UnitValue {
 
         return otherUnitMeasure.getValue() == this.getValue() && otherUnitMeasure.getUnit().equals(this.getUnit());
     }
+
+    @Override
+    public String toString() {
+        return value + " " + unit;
+    }
 }
