@@ -32,4 +32,10 @@ public class ConversionMap {
     public ArrayList<Conversion> getConversions() {
         return conversions;
     }
+
+    public ConversionMap addConversion(Conversion conversion) {
+        ArrayList<Conversion> conversions = (ArrayList<Conversion>) this.conversions.clone();
+        conversions.add(conversion);
+        return new ConversionMap(conversions);
+    }
 }

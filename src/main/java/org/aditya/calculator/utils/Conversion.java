@@ -3,24 +3,24 @@ package org.aditya.calculator.utils;
 import java.util.ArrayList;
 
 public class Conversion {
-    private UnitValue unit1;
-    private UnitValue unit2;
+    private UnitValue unitValue1;
+    private UnitValue unitValue2;
 
-    public Conversion(UnitValue unit1, UnitValue unit2) {
-        this.unit1 = unit1;
-        this.unit2 = unit2;
+    public Conversion(UnitValue unitValue1, UnitValue unitValue2) {
+        this.unitValue1 = unitValue1;
+        this.unitValue2 = unitValue2;
     }
 
     public UnitValue convert(UnitValue initialUnitValue) {
         double multiplier;
         Unit newUnit;
 
-        if (initialUnitValue.getUnit().equals(unit1.getUnit())) {
-            multiplier = unit2.getValue() / unit1.getValue();
-            newUnit = unit2.getUnit();
-        } else if (initialUnitValue.getUnit().equals(unit2.getUnit())) {
-            multiplier = unit1.getValue() / unit2.getValue();
-            newUnit = unit1.getUnit();
+        if (initialUnitValue.getUnit().equals(unitValue1.getUnit())) {
+            multiplier = unitValue2.getValue() / unitValue1.getValue();
+            newUnit = unitValue2.getUnit();
+        } else if (initialUnitValue.getUnit().equals(unitValue2.getUnit())) {
+            multiplier = unitValue1.getValue() / unitValue2.getValue();
+            newUnit = unitValue1.getUnit();
         } else {
             return null;
         }
@@ -28,14 +28,35 @@ public class Conversion {
         return new UnitValue(initialUnitValue.getValue() * multiplier, newUnit);
     }
 
+    public Unit convertUnit(Unit initialUnit) {
+        Unit newUnit;
+
+        if (initialUnit.equals(unitValue1.getUnit())) {
+            newUnit = unitValue2.getUnit();
+        } else if (initialUnit.equals(unitValue2.getUnit())) {
+            newUnit = unitValue1.getUnit();
+        } else {
+            return null;
+        }
+
+        return newUnit;
+    }
+
     public ArrayList<UnitValue> getUnitValues() {
         ArrayList<UnitValue> units = new ArrayList<>();
-        units.add(unit1);
-        units.add(unit2);
+        units.add(unitValue1);
+        units.add(unitValue2);
         return units;
     }
 
-    /*
+    public boolean contains(Unit unit) {
+        return unitValue1.getUnit().equals(unit) || unitValue2.getUnit().equals(unit);
+    }
+
+    public boolean contains(UnitValue unitValue) {
+        return contains(unitValue.getUnit());
+    }
+
     @Override
     public boolean equals(Object otherObject) {
         if (!(otherObject instanceof Conversion)) {
@@ -44,7 +65,18 @@ public class Conversion {
 
         Conversion otherConversion = (Conversion) otherObject;
 
-        return otherConversion.getUnitValues().contains(unit1) && otherConversion.getUnitValues().contains(unit2);
+        return otherConversion.getUnitValues().contains(unitValue1) && otherConversion.getUnitValues().contains(unitValue2);
     }
-    */
+
+    Conversion moveUnitToBottom(Unit unit) {
+        if (!contains(unit)) {
+            return null;
+        }
+
+        if (unitValue1.getUnit().equals(unit)) {
+            return new Conversion(unitValue2, unitValue1);
+        } else {
+            return new Conversion(unitValue1, unitValue2);
+        }
+    }
 }
