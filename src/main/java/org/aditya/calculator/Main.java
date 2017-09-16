@@ -41,6 +41,9 @@ public class Main {
         lengthConversions.add(new Conversion(
                 new UnitValue(12, new Unit("in", UnitType.LENGTH)),
                 new UnitValue(1, new Unit("ft", UnitType.LENGTH))));
+        lengthConversions.add(new Conversion(
+                new UnitValue(6, new Unit("ft", UnitType.LENGTH)),
+                new UnitValue(1, new Unit("fathom", UnitType.LENGTH))));
 
         massConversions.add(new Conversion(
                 new UnitValue(1, new Unit("kg", UnitType.MASS)),
@@ -80,6 +83,15 @@ public class Main {
         volumeConversions.add(new Conversion(
                 new UnitValue(1, new Unit("gal", UnitType.VOLUME)),
                 new UnitValue(3.7854, new Unit("L", UnitType.VOLUME))));
+        volumeConversions.add(new Conversion(
+                new UnitValue(2, new Unit("cup", UnitType.VOLUME)),
+                new UnitValue(1, new Unit("pt", UnitType.VOLUME))));
+        volumeConversions.add(new Conversion(
+                new UnitValue(2, new Unit("pt", UnitType.VOLUME)),
+                new UnitValue(1, new Unit("qt", UnitType.VOLUME))));
+        volumeConversions.add(new Conversion(
+                new UnitValue(1, new Unit("cup", UnitType.VOLUME)),
+                new UnitValue(8, new Unit("fl oz", UnitType.VOLUME))));
 
         unitTypes.put("km", UnitType.LENGTH);
         unitTypes.put("mi", UnitType.LENGTH);
@@ -89,6 +101,7 @@ public class Main {
         unitTypes.put("in", UnitType.LENGTH);
         unitTypes.put("cm", UnitType.LENGTH);
         unitTypes.put("Å", UnitType.LENGTH);
+        unitTypes.put("fathom", UnitType.LENGTH);
         unitTypes.put("kg", UnitType.MASS);
         unitTypes.put("lb", UnitType.MASS);
         unitTypes.put("g", UnitType.MASS);
@@ -103,6 +116,9 @@ public class Main {
         unitTypes.put("L", UnitType.VOLUME);
         unitTypes.put("qt", UnitType.VOLUME);
         unitTypes.put("gal", UnitType.VOLUME);
+        unitTypes.put("cup", UnitType.VOLUME);
+        unitTypes.put("pt", UnitType.VOLUME);
+        unitTypes.put("fl oz", UnitType.VOLUME);
 
         conversionLists.put(UnitType.LENGTH, lengthConversions);
         conversionLists.put(UnitType.MASS, massConversions);
@@ -119,18 +135,27 @@ public class Main {
         System.out.println("Enter the initial value in the format <amount> <unit>:");
         String startString = scanner.nextLine();
 
-        if (startString.split(" ").length != 2) {
+        String[] startUnitStringArray = startString.split(" ");
+
+        if (startUnitStringArray.length < 2) {
             System.err.println("Your starting value must be in the format <amount> <unit>!");
             return;
         }
         Double amount;
         try {
-            amount = Double.parseDouble(startString.split(" ")[0]);
+            amount = Double.parseDouble(startUnitStringArray[0]);
         } catch (NumberFormatException e) {
             System.err.println("You have entered an invalid amount for the starting value!");
             return;
         }
-        String startUnitString = startString.split(" ")[1];
+        String startUnitString = "";
+
+        for (int i = 1; i < startUnitStringArray.length; i++) {
+            startUnitString += startUnitStringArray[i];
+            if (i != startUnitStringArray.length - 1) {
+                startUnitString += " ";
+            }
+        }
 
         Set<String> units = unitTypes.keySet();
         if (!units.contains(startUnitString)) {
@@ -143,7 +168,7 @@ public class Main {
         String endUnitString = scanner.nextLine();
 
         if (!units.contains(endUnitString)) {
-            System.err.println("Your desired unit is invalid / not supported!");
+            System.err.println("Your desired unit is invalid / not supported / of the wrong type!");
             return;
         }
 

@@ -23,7 +23,6 @@ public class FullConversionMap {
         return finalUnitValue;
     }
 
-
     private String line1 = "";
     private String line2 = "";
     private String line3 = "";
