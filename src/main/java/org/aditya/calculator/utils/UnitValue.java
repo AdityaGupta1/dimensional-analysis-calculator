@@ -9,7 +9,7 @@ public class UnitValue {
         this.unit = unit;
     }
 
-    public double getValue() {
+    double getValue() {
         return value;
     }
 

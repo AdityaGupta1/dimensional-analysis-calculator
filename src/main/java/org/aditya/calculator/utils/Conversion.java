@@ -42,7 +42,7 @@ public class Conversion {
         return newUnit;
     }
 
-    public ArrayList<UnitValue> getUnitValues() {
+    ArrayList<UnitValue> getUnitValues() {
         ArrayList<UnitValue> units = new ArrayList<>();
         units.add(unitValue1);
         units.add(unitValue2);
@@ -51,10 +51,6 @@ public class Conversion {
 
     public boolean contains(Unit unit) {
         return unitValue1.getUnit().equals(unit) || unitValue2.getUnit().equals(unit);
-    }
-
-    public boolean contains(UnitValue unitValue) {
-        return contains(unitValue.getUnit());
     }
 
     @Override

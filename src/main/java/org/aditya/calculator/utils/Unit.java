@@ -1,15 +1,15 @@
 package org.aditya.calculator.utils;
 
 public class Unit {
-    public String unitString;
-    public UnitType type;
+    private String unitString;
+    private UnitType type;
 
     public Unit(String unitString, UnitType type) {
         this.unitString = unitString;
         this.type = type;
     }
 
-    public String getUnitString() {
+    private String getUnitString() {
         return unitString;
     }
 
