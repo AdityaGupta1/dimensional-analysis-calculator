@@ -9,7 +9,7 @@ public class Unit {
         this.type = type;
     }
 
-    private String getUnitString() {
+    public String getUnitString() {
         return unitString;
     }
 

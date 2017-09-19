@@ -16,6 +16,46 @@ public class Main {
     private static HashMap<String, UnitType> unitTypes = new HashMap<>();
     private static HashMap<UnitType, ArrayList<Conversion>> conversionLists = new HashMap<>();
 
+    private static ArrayList<Unit> unitsWithPrefixes = new ArrayList<>();
+    private static HashMap<String, Double> prefixes = new HashMap<>();
+
+    private static void addMetricConversions() {
+        unitsWithPrefixes.add(new Unit("m", UnitType.LENGTH));
+        unitsWithPrefixes.add(new Unit("g", UnitType.MASS));
+        unitsWithPrefixes.add(new Unit("L", UnitType.VOLUME));
+        unitsWithPrefixes.add(new Unit("Pa", UnitType.PRESSURE));
+
+        prefixes.put("Y", Math.pow(10, 24));
+        prefixes.put("Z", Math.pow(10, 21));
+        prefixes.put("E", Math.pow(10, 18));
+        prefixes.put("P", Math.pow(10, 15));
+        prefixes.put("T", Math.pow(10, 12));
+        prefixes.put("G", Math.pow(10, 9));
+        prefixes.put("M", Math.pow(10, 6));
+        prefixes.put("k", Math.pow(10, 3));
+        prefixes.put("d", Math.pow(10, -1));
+        prefixes.put("c", Math.pow(10, -2));
+        prefixes.put("m", Math.pow(10, -3));
+        prefixes.put("µ", Math.pow(10, -6));
+        prefixes.put("n", Math.pow(10, -9));
+        prefixes.put("p", Math.pow(10, -12));
+        prefixes.put("f", Math.pow(10, -15));
+        prefixes.put("a", Math.pow(10, -18));
+        prefixes.put("z", Math.pow(10, -21));
+        prefixes.put("y", Math.pow(10, -24));
+
+        for (Unit unit : unitsWithPrefixes) {
+            for (String prefix : prefixes.keySet()) {
+                String newUnitString = prefix + unit.getUnitString();
+                UnitType type = unit.getUnitType();
+                conversionLists.get(type).add(new Conversion(
+                        new UnitValue(prefixes.get(prefix), unit),
+                        new UnitValue(1, new Unit(newUnitString, type))));
+                unitTypes.put(newUnitString, type);
+            }
+        }
+    }
+
     private static void addConversions() {
         lengthConversions.add(new Conversion(
                 new UnitValue(1, new Unit("km", UnitType.LENGTH)),
@@ -124,6 +164,8 @@ public class Main {
         conversionLists.put(UnitType.MASS, massConversions);
         conversionLists.put(UnitType.PRESSURE, pressureConversions);
         conversionLists.put(UnitType.VOLUME, volumeConversions);
+
+        addMetricConversions();
     }
 
     public static void main(String[] args) {
