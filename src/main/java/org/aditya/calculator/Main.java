@@ -25,24 +25,24 @@ public class Main {
         unitsWithPrefixes.add(new Unit("L", UnitType.VOLUME));
         unitsWithPrefixes.add(new Unit("Pa", UnitType.PRESSURE));
 
-        prefixes.put("Y", Math.pow(10, 24));
-        prefixes.put("Z", Math.pow(10, 21));
-        prefixes.put("E", Math.pow(10, 18));
-        prefixes.put("P", Math.pow(10, 15));
-        prefixes.put("T", Math.pow(10, 12));
-        prefixes.put("G", Math.pow(10, 9));
-        prefixes.put("M", Math.pow(10, 6));
-        prefixes.put("k", Math.pow(10, 3));
-        prefixes.put("d", Math.pow(10, -1));
-        prefixes.put("c", Math.pow(10, -2));
-        prefixes.put("m", Math.pow(10, -3));
-        prefixes.put("µ", Math.pow(10, -6));
-        prefixes.put("n", Math.pow(10, -9));
-        prefixes.put("p", Math.pow(10, -12));
-        prefixes.put("f", Math.pow(10, -15));
-        prefixes.put("a", Math.pow(10, -18));
-        prefixes.put("z", Math.pow(10, -21));
-        prefixes.put("y", Math.pow(10, -24));
+        prefixes.put("Y", 1E24);
+        prefixes.put("Z", 1E21);
+        prefixes.put("E", 1E18);
+        prefixes.put("P", 1E15);
+        prefixes.put("T", 1E12);
+        prefixes.put("G", 1E9);
+        prefixes.put("M", 1E6);
+        prefixes.put("k", 1E3);
+        prefixes.put("d", 1E-1);
+        prefixes.put("c", 1E-2);
+        prefixes.put("m", 1E-3);
+        prefixes.put("µ", 1E-6);
+        prefixes.put("n", 1E-9);
+        prefixes.put("p", 1E-12);
+        prefixes.put("f", 1E-15);
+        prefixes.put("a", 1E-18);
+        prefixes.put("z", 1E-21);
+        prefixes.put("y", 1E-24);
 
         for (Unit unit : unitsWithPrefixes) {
             for (String prefix : prefixes.keySet()) {
@@ -219,6 +219,7 @@ public class Main {
         Unit end = new Unit(endUnitString, unitTypes.get(endUnitString));
 
         FullConversionMap conversionMap = convert(start, end);
+        System.out.println();
         System.out.println(conversionMap.createDimensionalAnalysis());
     }
 
