@@ -33,24 +33,30 @@ public class Main {
         prefixes.put("G", 1E9);
         prefixes.put("M", 1E6);
         prefixes.put("k", 1E3);
-        prefixes.put("d", 1E-1);
-        prefixes.put("c", 1E-2);
-        prefixes.put("m", 1E-3);
-        prefixes.put("µ", 1E-6);
-        prefixes.put("n", 1E-9);
-        prefixes.put("p", 1E-12);
-        prefixes.put("f", 1E-15);
-        prefixes.put("a", 1E-18);
-        prefixes.put("z", 1E-21);
-        prefixes.put("y", 1E-24);
+        prefixes.put("d", 1E1);
+        prefixes.put("c", 1E2);
+        prefixes.put("m", 1E3);
+        prefixes.put("µ", 1E6);
+        prefixes.put("n", 1E9);
+        prefixes.put("p", 1E12);
+        prefixes.put("f", 1E15);
+        prefixes.put("a", 1E18);
+        prefixes.put("z", 1E21);
+        prefixes.put("y", 1E24);
 
-        for (Unit unit : unitsWithPrefixes) {
+        for (Unit originalUnit : unitsWithPrefixes) {
             for (String prefix : prefixes.keySet()) {
-                String newUnitString = prefix + unit.getUnitString();
-                UnitType type = unit.getUnitType();
-                conversionLists.get(type).add(new Conversion(
-                        new UnitValue(prefixes.get(prefix), unit),
-                        new UnitValue(1, new Unit(newUnitString, type))));
+                String newUnitString = prefix + originalUnit.getUnitString();
+                UnitType type = originalUnit.getUnitType();
+                if (prefix.toUpperCase().equals(prefix)) {
+                    conversionLists.get(type).add(new Conversion(
+                            new UnitValue(prefixes.get(prefix), originalUnit),
+                            new UnitValue(1, new Unit(newUnitString, type))));
+                } else {
+                    conversionLists.get(type).add(new Conversion(
+                            new UnitValue(1, originalUnit),
+                            new UnitValue(prefixes.get(prefix), new Unit(newUnitString, type))));
+                }
                 unitTypes.put(newUnitString, type);
             }
         }
