@@ -28,20 +28,6 @@ public class Conversion {
         return new UnitValue(initialUnitValue.getValue() * multiplier, newUnit);
     }
 
-    public Unit convertUnit(Unit initialUnit) {
-        Unit newUnit;
-
-        if (initialUnit.equals(unitValue1.getUnit())) {
-            newUnit = unitValue2.getUnit();
-        } else if (initialUnit.equals(unitValue2.getUnit())) {
-            newUnit = unitValue1.getUnit();
-        } else {
-            return null;
-        }
-
-        return newUnit;
-    }
-
     ArrayList<UnitValue> getUnitValues() {
         ArrayList<UnitValue> units = new ArrayList<>();
         units.add(unitValue1);
