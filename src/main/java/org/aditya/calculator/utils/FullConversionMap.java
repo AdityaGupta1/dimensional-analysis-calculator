@@ -1,14 +1,26 @@
 package org.aditya.calculator.utils;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+
 public class FullConversionMap {
     private UnitValue initialUnitValue;
     private ConversionMap map;
     private UnitValue finalUnitValue;
+    private int sigFigs;
 
     public FullConversionMap(UnitValue initialUnitValue, ConversionMap map, UnitValue finalUnitValue) {
         this.initialUnitValue = initialUnitValue;
         this.map = map;
         this.finalUnitValue = finalUnitValue;
+        this.sigFigs = 0;
+    }
+
+    public FullConversionMap(UnitValue initialUnitValue, ConversionMap map, UnitValue finalUnitValue, int sigFigs) {
+        this.initialUnitValue = initialUnitValue;
+        this.map = map;
+        this.finalUnitValue = finalUnitValue;
+        this.sigFigs = sigFigs;
     }
 
     public UnitValue getInitialUnitValue() {
@@ -21,6 +33,10 @@ public class FullConversionMap {
 
     public UnitValue getFinalUnitValue() {
         return finalUnitValue;
+    }
+
+    public void setSigFigs(int sigFigs) {
+        this.sigFigs = sigFigs;
     }
 
     private String line1 = "";
@@ -66,6 +82,10 @@ public class FullConversionMap {
                 line2 += "-";
             }
         }
+
+        BigDecimal bigDecimal = new BigDecimal(finalUnitValue.getValue());
+        bigDecimal = bigDecimal.round(new MathContext(3));
+        finalUnitValue = new UnitValue(bigDecimal.doubleValue(), finalUnitValue.getUnit());
 
         line2 += " = " + finalUnitValue;
 

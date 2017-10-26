@@ -48,7 +48,7 @@ public class Main {
             for (String prefix : prefixes.keySet()) {
                 String newUnitString = prefix + originalUnit.getUnitString();
                 UnitType type = originalUnit.getUnitType();
-                if (prefix.toUpperCase().equals(prefix)) {
+                if (prefix.toUpperCase().equals(prefix) || prefix.equals("k")) {
                     conversionLists.get(type).add(new Conversion(
                             new UnitValue(prefixes.get(prefix), originalUnit),
                             new UnitValue(1, new Unit(newUnitString, type))));
@@ -189,6 +189,10 @@ public class Main {
             System.err.println("Your starting value must be in the format <amount> <unit>!");
             return;
         }
+
+        SignificantFigureCalculator sigFigCalculator = new SignificantFigureCalculator();
+        int startingSigFigs = sigFigCalculator.calculateSignificantFigures(startUnitStringArray[0]);
+
         Double amount;
         try {
             amount = Double.parseDouble(startUnitStringArray[0]);
@@ -225,6 +229,7 @@ public class Main {
         Unit end = new Unit(endUnitString, unitTypes.get(endUnitString));
 
         FullConversionMap conversionMap = convert(start, end);
+        conversionMap.setSigFigs(startingSigFigs);
         System.out.println();
         System.out.println(conversionMap.createDimensionalAnalysis());
     }
